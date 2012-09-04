@@ -1,5 +1,0 @@
-1o Transformar sinal digital em analógico por meio da transformada de Fourrier. A operação contrária tambem.
-2o Fazer a decodificação CDMA
-3o Como serao guardadas as ondas? pares x,y é bem simples, ou pode ser um monte de valores y só.
-4o Fazer uma funcáo que desenhe as ondas
-5o ir pensando no view. Ia ser legal se as ondas fossem desenhadas de forma animada. mas pra isso vai ter que ser possivel controlar a velocidade que e feita a decodificaçao. (se voce quer mostrar a onda sendo decodificada pra ser didatico tem que ser devagar, caso voce mandar um arquivo grande tem que ser rápido.)
