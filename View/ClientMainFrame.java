@@ -5,19 +5,28 @@
 package View;
 
 import Signal.Signal;
+import User.Client;
 import java.awt.Graphics;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author gustavolm
+ * @author gustavolivrare
  */
 public class ClientMainFrame extends javax.swing.JFrame {
-
-    public ClientMainFrame() {
+    private static String server;
+    private static int port;
+    
+    public ClientMainFrame() 
+    {
         initComponents();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        ClientMainFrame.server = (String)JOptionPane.showInputDialog("Enter the server IP");
+        ClientMainFrame.port = Integer.parseInt(JOptionPane.showInputDialog("Enter the server port"));
     }
 
     @Override
@@ -128,9 +137,33 @@ public class ClientMainFrame extends javax.swing.JFrame {
         setBounds((screenSize.width-624)/2, (screenSize.height-591)/2, 624, 591);
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         ClientMainFrame mf = new ClientMainFrame();
+        Client client = new Client(ClientMainFrame.server, ClientMainFrame.port);
+        Scanner sc = new Scanner(System.in);
+        client.open();
+        do{
+            Sleep(1000);
+            System.out.println("Estabelecendo conexao...");
+        }while(!client.isConnected());
+        System.out.println("Conexao Estabelecida!");
+        while(sc.hasNextLine())
+        {
+            Sleep(100);
+            client.sendMessage(sc.nextLine());
+        }
     }
+    
+    private static void Sleep(int time)
+    {
+        try {
+                Thread.sleep(time);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ClientMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel panelWave0;
     private javax.swing.JPanel panelWave1;

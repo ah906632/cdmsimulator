@@ -5,19 +5,25 @@
 package View;
 
 import Signal.Signal;
+import User.Server;
 import java.awt.Graphics;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author gustavolm
+ * @author gustavolivrare
  */
 public class ServerMainFrame extends javax.swing.JFrame {
-
+    private static int port;
+    
     public ServerMainFrame() {
         initComponents();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        ServerMainFrame.port = Integer.parseInt(JOptionPane.showInputDialog("Enter the server port"));
     }
 
     @Override
@@ -130,7 +136,29 @@ public class ServerMainFrame extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         ServerMainFrame mf = new ServerMainFrame();
+        Server server = new Server(ServerMainFrame.port);
+        Scanner sc = new Scanner(System.in);
+        server.open();
+        do{
+            Sleep(1000);
+        }while(!server.isConnected());
+        System.out.println("Conexao Estabelecida!");
+        while(sc.hasNextLine())
+        {
+            Sleep(100);
+            server.sendMessage(sc.nextLine());
+        }
     }
+    
+    private static void Sleep(int time)
+    {
+        try {
+                Thread.sleep(time);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ClientMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel panelWave0;
     private javax.swing.JPanel panelWave1;
